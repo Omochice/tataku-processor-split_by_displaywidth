@@ -3,14 +3,14 @@
 The tataku.vim module that split strings using by vital.vim
 
 
-## DEPENDENCIES
+## dependencies
 
 This plugin needs below:
 
 - [denops.vim](https://github.com/vim-denops/denops.vim)
 - [tataku.vim](https://github.com/Omochice/tataku.vim)
 
-## OPTIONS
+## options
 
 This module provides below options:
 
@@ -32,7 +32,7 @@ This module provides below options:
 
   default: `v:true`
 
-## SAMPLES
+## samples
 
 ```vim
 let g:tataku_recipes = #{
