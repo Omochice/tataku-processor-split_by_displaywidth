@@ -1,4 +1,4 @@
-import { Denops } from "https://deno.land/x/denops_std@v3.12.0/mod.ts";
+import { Denops } from "https://deno.land/x/denops_std@v5.0.0/mod.ts";
 import {
   isArray,
   isBoolean,
@@ -6,7 +6,7 @@ import {
   isObject,
   isString,
   isUndefined,
-} from "https://deno.land/x/unknownutil@v2.1.0/mod.ts";
+} from "https://deno.land/x/unknownutil@v2.1.1/mod.ts";
 import { Processor } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
 
 export default class implements Processor {
