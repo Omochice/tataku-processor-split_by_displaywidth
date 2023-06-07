@@ -1,76 +1,29 @@
 import { Denops } from "https://deno.land/x/denops_std@v5.0.0/mod.ts";
+import { is } from "https://deno.land/x/unknownutil@v3.2.0/mod.ts";
 import {
-  isArray,
-  isBoolean,
-  isNumber,
-  isObject,
-  isString,
-  isUndefined,
-} from "https://deno.land/x/unknownutil@v2.1.1/mod.ts";
-import { Processor } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
+  $boolean,
+  $const,
+  $number,
+  $object,
+  $opt,
+  $union,
+  access,
+  type Infer,
+} from "https://esm.sh/lizod@0.2.4";
 
-export default class implements Processor {
-  #option: Option;
-  constructor(option: Record<string, undefined>) {
-    if (!isOption(option)) {
-      throw new Error(
-        `ERROR: ${JSON.stringify(option)}`,
-      );
-    }
-    this.#option = option;
-  }
+const isOption = $object({
+  width: $number,
+  float: $opt($union([$const("left"), $const("center"), $const("right")])),
+  is_wrap: $opt($boolean),
+});
 
-  async run(
-    denops: Denops,
-    source: string[],
-  ): Promise<string[]> {
-    const splited = await denops.call(
-      "tataku#processor#split_by_displaywidth#split",
-      [
-        source,
-        convertOption(this.#option),
-      ],
-    );
-    if (
-      !isArray(splited, (x: unknown): x is string[] => isArray(x, isString))
-    ) {
-      throw new Error(
-        `Error occured in splitting: ${JSON.stringify(splited)}`,
-      );
-    }
-    return splited.flat().map((e: string) => e.trimEnd());
-  }
-}
-
-type Option = {
-  width: number;
-  float?: "left" | "center" | "right";
-  is_wrap?: boolean;
-};
+type Option = Infer<typeof isOption>;
 
 type VimOption = {
   width: number;
   float: 1 | 0 | -1;
   is_wrap: boolean;
 };
-
-function isOption(x: unknown): x is Option {
-  if (!isObject(x)) {
-    return false;
-  }
-  return isNumber(x.width) &&
-    ((isUndefined(x.float) || isString(x.float)) &&
-      Object.keys(float).includes(x.float as string)) &&
-    (isUndefined(x.is_wrap) || isBoolean(x.is_wrap));
-}
-
-function convertOption(x: Option): VimOption {
-  return {
-    width: x.width,
-    float: float[x.float || "left"],
-    is_wrap: (x.is_wrap === undefined || x.is_wrap),
-  };
-}
 
 const float = {
   left: -1,
@@ -79,3 +32,42 @@ const float = {
 } as const satisfies {
   [key: string]: number;
 };
+
+function convertOption(x: Option): VimOption {
+  return {
+    width: x.width,
+    float: float[x.float ?? "left"],
+    is_wrap: (x.is_wrap ?? true),
+  };
+}
+
+const processor = (denops: Denops, option: unknown) => {
+  const ctx = { errors: [] };
+  if (!isOption(option, ctx)) {
+    throw new Error(
+      ctx.errors
+        .map((e) => `error at ${e} ${access(option, e)}`)
+        .join("\n"),
+    );
+  }
+  return new TransformStream<string[]>({
+    transform: async (chunk: string[], controller) => {
+      const splitted = await denops.call(
+        "tataku#processor#split_by_displaywidth#split",
+        [
+          chunk,
+          convertOption(option),
+        ],
+      );
+      if (!is.ArrayOf(is.String)(splitted)) {
+        throw new Error(
+          `Error occured in splitting: ${JSON.stringify(splitted)}`,
+        );
+      }
+
+      controller.enqueue(splitted.flat().map((e: string) => e.trimEnd()));
+    },
+  });
+};
+
+export default processor;
