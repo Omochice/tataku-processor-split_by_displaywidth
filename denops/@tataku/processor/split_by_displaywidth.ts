@@ -6,7 +6,7 @@ import {
   isObject,
   isString,
   isUndefined,
-} from "https://deno.land/x/unknownutil@v2.1.1/mod.ts";
+} from "https://deno.land/x/unknownutil@v3.2.0/mod.ts";
 import { Processor } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
 
 export default class implements Processor {
