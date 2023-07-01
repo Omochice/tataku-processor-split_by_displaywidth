@@ -59,7 +59,7 @@ const processor = (denops: Denops, option: unknown) => {
           convertOption(option),
         ],
       );
-      if (!is.ArrayOf(is.String)(splitted)) {
+      if (!is.ArrayOf(is.ArrayOf(is.String))(splitted)) {
         throw new Error(
           `Error occured in splitting: ${JSON.stringify(splitted)}`,
         );
