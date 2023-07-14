@@ -9,7 +9,7 @@ import {
   $union,
   access,
   type Infer,
-} from "https://esm.sh/lizod@0.2.4";
+} from "https://esm.sh/lizod@0.2.6/";
 
 const isOption = $object({
   width: $number,
