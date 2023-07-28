@@ -1,5 +1,5 @@
 import { Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
-import { is } from "https://deno.land/x/unknownutil@v3.2.0/mod.ts";
+import { is } from "https://deno.land/x/unknownutil@v3.4.0/mod.ts";
 import {
   $boolean,
   $const,
