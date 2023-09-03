@@ -1,5 +1,5 @@
 import { Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
-import { is } from "https://deno.land/x/unknownutil@v3.4.0/mod.ts";
+import { is } from "https://deno.land/x/unknownutil@v3.6.0/mod.ts";
 import {
   $boolean,
   $const,
@@ -9,7 +9,7 @@ import {
   $union,
   access,
   type Infer,
-} from "https://esm.sh/lizod@0.2.6/";
+} from "https://esm.sh/lizod@0.2.7/";
 
 const isOption = $object({
   width: $number,
