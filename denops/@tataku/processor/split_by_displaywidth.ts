@@ -64,8 +64,11 @@ const processor = (denops: Denops, option: unknown) => {
           `Error occured in splitting: ${JSON.stringify(splitted)}`,
         );
       }
-
-      controller.enqueue(splitted.flat().map((e: string) => e.trimEnd()));
+      const e = splitted.flat()
+        .map((e: string) => e.trimEnd())
+        .map((e) => `${e}\n`);
+      console.debug(e);
+      controller.enqueue(e);
     },
   });
 };
