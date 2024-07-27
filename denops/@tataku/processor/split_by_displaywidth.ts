@@ -1,4 +1,4 @@
-import { Denops } from "https://deno.land/x/denops_std@v6.5.1/mod.ts";
+import { Denops } from "jsr:@denops/std@7.0.0";
 import { is } from "jsr:@core/unknownutil@3.18.1";
 import {
   $boolean,
