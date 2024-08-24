@@ -1,5 +1,5 @@
 import { Denops } from "jsr:@denops/std@7.0.3";
-import { is } from "jsr:@core/unknownutil@4.2.2";
+import { is } from "jsr:@core/unknownutil@4.3.0";
 import {
   $boolean,
   $const,
