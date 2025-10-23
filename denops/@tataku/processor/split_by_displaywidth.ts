@@ -1,4 +1,4 @@
-import { Denops } from "jsr:@denops/std@7.6.0";
+import { Denops } from "jsr:@denops/std@8.1.1";
 import { is } from "jsr:@core/unknownutil@4.3.0";
 import {
   $boolean,
